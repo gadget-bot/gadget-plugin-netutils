@@ -34,12 +34,12 @@ In your chat, you can perform the following actions:
 
 * `whois <DOMAIN|IP|ASN>` - Queries public [WHOIS](https://en.wikipedia.org/wiki/WHOIS) for the given object.
   * Parameters:
-	  - `<DOMAIN|IP|ASN>` either a domain name, an IP address, or an [ASN](https://www.arin.net/resources/guide/asn/).
+	  * `<DOMAIN|IP|ASN>` either a domain name, an IP address, or an [ASN](https://www.arin.net/resources/guide/asn/).
 * `hping [get|post|head] URL [COUNT] [INTERVAL(s|ms)]` - Performs an HTTP request to the given `URL` with some optional parameters.
 	* Parameters:
-	  - `[get|post|head]` - _optional_ Allows specificy the HTTP Request Type (default: `get`)
-		- `URL` - The HTTP or HTTPS URL
-		- `[COUNT]` - _optional_ The number of times to attempt the "ping" (default: `3`)
-		- `[INTERVAL(s|ms)]` - _optional_ The time to wait, in either seconds (`s`) or milliseconds (`ms`), between requests (default: `2s`)
+		* `[get|post|head]` - _optional_ Allows specificy the HTTP Request Type (default: `get`)
+		*  `URL` - The HTTP or HTTPS URL
+		* `[COUNT]` - _optional_ The number of times to attempt the "ping" (default: `3`)
+		* `[INTERVAL(s|ms)]` - _optional_ The time to wait, in either seconds (`s`) or milliseconds (`ms`), between requests (default: `2s`)
 	* Notes:
-	  - A big shout out to [https://github.com/mehrdadrad/mylg](https://github.com/mehrdadrad/mylg), from which most of the `hping` feature's work is derived
+	  * A big shout out to [https://github.com/mehrdadrad/mylg](https://github.com/mehrdadrad/mylg), from which most of the `hping` feature's work is derived
