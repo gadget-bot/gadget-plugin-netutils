@@ -1,0 +1,5 @@
+scripts/*local*.sh
+.DS_Store
+
+tmp/*
+dist/*
