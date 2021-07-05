@@ -61,6 +61,7 @@ type HTTPTrace struct {
 	TimeToFirstByte float64
 }
 
+// IPVersion determines the IP version (IPv4 or IPv6) for a request
 func (p HTTPPing) IPVersion(t string) string {
 	if p.ipv4 {
 		return fmt.Sprintf("%s4", t)
@@ -73,7 +74,7 @@ func (p HTTPPing) IPVersion(t string) string {
 
 func (p *HTTPPing) run() (map[int]float64, []float64, error) {
 	if p.method != "GET" && p.method != "POST" && p.method != "HEAD" {
-		return nil, nil, fmt.Errorf("Error: Method '%s' not recognized.", p.method)
+		return nil, nil, fmt.Errorf("method '%s' not recognized", p.method)
 	}
 
 	var (
@@ -235,7 +236,7 @@ func printStats(p HTTPPing, c map[int]float64, s []float64) string {
 func newPing(method string, URL string, count int, interval string, tlsVerify bool) (*HTTPPing, error) {
 	u, err := url.Parse(URL)
 	if err != nil {
-		return &HTTPPing{}, fmt.Errorf("Unparseable url")
+		return &HTTPPing{}, fmt.Errorf("unparseable url")
 	}
 
 	host, _, err := net.SplitHostPort(u.Host)
@@ -267,13 +268,13 @@ func newPing(method string, URL string, count int, interval string, tlsVerify bo
 	p.rAddr = ipAddr
 	p.interval, err = time.ParseDuration(interval)
 	if err != nil {
-		return p, fmt.Errorf("Failed to parse interval: %s. Correct syntax is <number>s/ms", err)
+		return p, fmt.Errorf("failed to parse interval: %s, correct syntax is <number>s/ms", err)
 	}
 	// set timeout
 	timeout := "10s"
 	p.timeout, err = time.ParseDuration(timeout)
 	if err != nil {
-		return p, fmt.Errorf("Failed to parse timeout: %s. Correct syntax is <number>s/ms", err)
+		return p, fmt.Errorf("failed to parse timeout: %s, correct syntax is <number>s/ms", err)
 	}
 	// set method
 	p.method = method
