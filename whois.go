@@ -18,7 +18,7 @@ func queryWhois() *router.MentionRoute {
 	pluginRoute.Pattern = `(?i)^whois <?([^>]+)>?$`
 	pluginRoute.Description = "Looks up WHOIS info for a given domain, IP, or ASN"
 	pluginRoute.Help = "whois <DOMAIN|IP|ASN>"
-	pluginRoute.Plugin = func(api slack.Client, router router.Router, ev slackevents.AppMentionEvent, message string) {
+	pluginRoute.Plugin = func(router router.Router, route router.Route, api slack.Client, ev slackevents.AppMentionEvent, message string) {
 		// Here's how we can react to the message
 		msgRef := slack.NewRefToMessage(ev.Channel, ev.TimeStamp)
 		api.AddReaction("male-detective", msgRef)

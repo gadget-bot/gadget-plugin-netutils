@@ -3,3 +3,6 @@ scripts/*local*.sh
 
 tmp/*
 dist/*
+
+coverage.out
+.vscode/*

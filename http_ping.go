@@ -292,7 +292,7 @@ func runHTTPPing() *router.MentionRoute {
 	pluginRoute.Pattern = `(?i)^hping( (get|post|head))? <?(https?://[^\s>]+)>?( ([0-9]+)( ([0-9]+(s|ms)))?)?$`
 	pluginRoute.Description = "Sends HTTP Pings to a given URL"
 	pluginRoute.Help = "hping [get|post|head] URL [COUNT] [INTERVAL(s|ms)]"
-	pluginRoute.Plugin = func(api slack.Client, router router.Router, ev slackevents.AppMentionEvent, message string) {
+	pluginRoute.Plugin = func(router router.Router, route router.Route, api slack.Client, ev slackevents.AppMentionEvent, message string) {
 		msgRef := slack.NewRefToMessage(ev.Channel, ev.TimeStamp)
 		api.AddReaction("male-detective", msgRef)
 
