@@ -7,7 +7,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/httptrace"
@@ -150,18 +149,18 @@ func (p *HTTPPing) Ping() (HTTPResult, error) {
 	if err != nil {
 		return r, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	r.TotalTime = time.Since(sTime).Seconds()
 
 	if p.method == "GET" {
-		body, err := ioutil.ReadAll(resp.Body)
+		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return r, err
 		}
 		r.Size = len(body)
 	} else {
-		io.Copy(ioutil.Discard, resp.Body)
+		_, _ = io.Copy(io.Discard, resp.Body)
 	}
 
 	r.StatusCode = resp.StatusCode
@@ -294,7 +293,7 @@ func runHTTPPing() *router.MentionRoute {
 	pluginRoute.Help = "hping [get|post|head] URL [COUNT] [INTERVAL(s|ms)]"
 	pluginRoute.Plugin = func(router router.Router, route router.Route, api slack.Client, ev slackevents.AppMentionEvent, message string) {
 		msgRef := slack.NewRefToMessage(ev.Channel, ev.TimeStamp)
-		api.AddReaction("male-detective", msgRef)
+		_ = api.AddReaction("male-detective", msgRef)
 
 		re := regexp.MustCompile(pluginRoute.Pattern)
 		results := re.FindStringSubmatch(message)
@@ -316,7 +315,7 @@ func runHTTPPing() *router.MentionRoute {
 		}
 
 		var countInt int
-		fmt.Sscan(count, &countInt)
+		_, _ = fmt.Sscan(count, &countInt)
 
 		// Create a new HTTPing
 		pinger, _ := newPing(method, checkURL, countInt, interval, false)
@@ -324,7 +323,7 @@ func runHTTPPing() *router.MentionRoute {
 		responses, responseTimes, _ := pinger.run()
 
 		// Here's how we send a reply
-		api.PostMessage(
+		_, _, _ = api.PostMessage(
 			ev.Channel,
 			slack.MsgOptionText(
 				printStats(*pinger, responses, responseTimes),
