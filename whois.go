@@ -21,7 +21,7 @@ func queryWhois() *router.MentionRoute {
 	pluginRoute.Plugin = func(router router.Router, route router.Route, api slack.Client, ev slackevents.AppMentionEvent, message string) {
 		// Here's how we can react to the message
 		msgRef := slack.NewRefToMessage(ev.Channel, ev.TimeStamp)
-		api.AddReaction("male-detective", msgRef)
+		_ = api.AddReaction("male-detective", msgRef)
 
 		re := regexp.MustCompile(pluginRoute.Pattern)
 		results := re.FindStringSubmatch(message)
@@ -48,7 +48,7 @@ func queryWhois() *router.MentionRoute {
 			replyTS = ev.TimeStamp
 		}
 
-		api.PostMessage(
+		_, _, _ = api.PostMessage(
 			ev.Channel,
 			slack.MsgOptionText(
 				fmt.Sprintf("```%s```\n", result),
