@@ -291,9 +291,9 @@ func runHTTPPing() *router.MentionRoute {
 	pluginRoute.Pattern = `(?i)^hping( (get|post|head))? <?(https?://[^\s>]+)>?( ([0-9]+)( ([0-9]+(s|ms)))?)?$`
 	pluginRoute.Description = "Sends HTTP Pings to a given URL"
 	pluginRoute.Help = "hping [get|post|head] URL [COUNT] [INTERVAL(s|ms)]"
-	pluginRoute.Plugin = func(router router.Router, route router.Route, api slack.Client, ev slackevents.AppMentionEvent, message string) {
+	pluginRoute.Plugin = func(ctx router.HandlerContext, ev slackevents.AppMentionEvent, message string) {
 		msgRef := slack.NewRefToMessage(ev.Channel, ev.TimeStamp)
-		_ = api.AddReaction("male-detective", msgRef)
+		_ = (*ctx.BotClient).AddReaction("male-detective", msgRef)
 
 		re := regexp.MustCompile(pluginRoute.Pattern)
 		results := re.FindStringSubmatch(message)
@@ -323,7 +323,7 @@ func runHTTPPing() *router.MentionRoute {
 		responses, responseTimes, _ := pinger.run()
 
 		// Here's how we send a reply
-		_, _, _ = api.PostMessage(
+		_, _, _ = (*ctx.BotClient).PostMessage(
 			ev.Channel,
 			slack.MsgOptionText(
 				printStats(*pinger, responses, responseTimes),
