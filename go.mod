@@ -5,7 +5,7 @@ go 1.25
 require (
 	github.com/gadget-bot/gadget v0.8.1
 	github.com/likexian/whois v1.15.7
-	github.com/slack-go/slack v0.27.0
+	github.com/slack-go/slack v0.29.0
 )
 
 require (
