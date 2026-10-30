@@ -1,11 +1,11 @@
 module github.com/gadget-bot/gadget-plugin-netutils
 
-go 1.25
+go 1.26
 
 require (
 	github.com/gadget-bot/gadget v0.8.1
 	github.com/likexian/whois v1.15.7
-	github.com/slack-go/slack v0.27.0
+	github.com/slack-go/slack v0.31.0
 )
 
 require (
